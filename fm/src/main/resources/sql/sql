@@ -1,0 +1,114 @@
+CREATE TABLE album
+(
+  id           INT AUTO_INCREMENT
+  COMMENT '主键'
+    PRIMARY KEY,
+  album_name   VARCHAR(200)  NOT NULL
+  COMMENT '专辑名称',
+  album_img    VARCHAR(200)  NOT NULL
+  COMMENT '专辑图片',
+  anchor       VARCHAR(20)   NOT NULL
+  COMMENT '专辑人员',
+  publish_date DATETIME      NULL
+  COMMENT '发布时间',
+  introduce    VARCHAR(2000) NULL
+  COMMENT '专题介绍',
+  is_valid     TINYINT(1)    NOT NULL
+  COMMENT '是否有效 1：有效 0：无效',
+  rectime      DATETIME      NULL
+  COMMENT '创建时间',
+  modtime      DATETIME      NULL
+  COMMENT '修改时间',
+  editor       VARCHAR(20)   NULL
+  COMMENT '修改人',
+  creator      VARCHAR(20)   NULL
+  COMMENT '创建人',
+  CONSTRAINT album_name
+  UNIQUE (album_name)
+)
+  COMMENT '专辑'
+  ENGINE = InnoDB;
+
+CREATE TABLE audiofile
+(
+  id             INT AUTO_INCREMENT
+  COMMENT '主键'
+    PRIMARY KEY,
+  album_id       INT                                     NOT NULL
+  COMMENT '专栏ID',
+  title          VARCHAR(200)                            NOT NULL
+  COMMENT '标题',
+  publish_date   TIMESTAMP DEFAULT CURRENT_TIMESTAMP     NOT NULL
+  COMMENT '发布时间',
+  audio_file_url VARCHAR(200)                            NOT NULL
+  COMMENT '文件地址',
+  is_valid       TINYINT(1)                              NOT NULL
+  COMMENT '是否有效',
+  rectime        TIMESTAMP DEFAULT CURRENT_TIMESTAMP     NOT NULL
+  COMMENT '创建时间',
+  modtime        TIMESTAMP DEFAULT '0000-00-00 00:00:00' NOT NULL
+  COMMENT '修改时间',
+  editor         VARCHAR(20)                             NULL
+  COMMENT '修改人',
+  creator        VARCHAR(20)                             NULL
+  COMMENT '创建人',
+  CONSTRAINT title
+  UNIQUE (title),
+  CONSTRAINT audiofile_ibfk_1
+  FOREIGN KEY (album_id) REFERENCES album (id)
+)
+  ENGINE = InnoDB;
+
+CREATE INDEX audiofile_ibfk_1
+  ON audiofile (album_id);
+
+CREATE TABLE category
+(
+  id            INT AUTO_INCREMENT
+  COMMENT '主键ID'
+    PRIMARY KEY,
+  category_name VARCHAR(20)                             NOT NULL
+  COMMENT '类别名称',
+  pid           INT                                     NULL
+  COMMENT '父级ID',
+  img           VARCHAR(200)                            NULL
+  COMMENT '类别图片',
+  is_valid      TINYINT(1) DEFAULT '0'                  NULL
+  COMMENT '是否有效 1：有效 0：无效',
+  rectime       TIMESTAMP DEFAULT CURRENT_TIMESTAMP     NOT NULL ON UPDATE CURRENT_TIMESTAMP
+  COMMENT '创建时间',
+  modtime       TIMESTAMP DEFAULT '0000-00-00 00:00:00' NOT NULL
+  COMMENT '修改时间',
+  creator       VARCHAR(10)                             NOT NULL
+  COMMENT '创建人',
+  editor        VARCHAR(10)                             NULL
+  COMMENT '修改人',
+  CONSTRAINT category_name
+  UNIQUE (category_name)
+)
+  COMMENT '分类'
+  ENGINE = InnoDB;
+
+CREATE TABLE category_album_relationship
+(
+  id          INT AUTO_INCREMENT
+    PRIMARY KEY,
+  category_id INT                                     NOT NULL
+  COMMENT '分类ID',
+  album_id    INT                                     NOT NULL
+  COMMENT '专辑ID',
+  is_valid    TINYINT(1)                              NOT NULL
+  COMMENT '状态，1：有效，0：无效',
+  rectime     TIMESTAMP DEFAULT CURRENT_TIMESTAMP     NOT NULL ON UPDATE CURRENT_TIMESTAMP
+  COMMENT '创建时间',
+  modtime     TIMESTAMP DEFAULT '0000-00-00 00:00:00' NOT NULL
+  COMMENT '修改时间',
+  creator     VARCHAR(10)                             NOT NULL
+  COMMENT '创建人',
+  editor      VARCHAR(10)                             NULL
+  COMMENT '修改人',
+  CONSTRAINT category_id
+  UNIQUE (category_id, album_id)
+)
+  ENGINE = InnoDB;
+
