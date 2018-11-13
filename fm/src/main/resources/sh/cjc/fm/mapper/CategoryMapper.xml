@@ -32,5 +32,7 @@
         editor = #{editor}
         WHERE id = #{id}
     </update>
-
+    <delete id="delete">
+        DELETE FROM category WHERE id = #{id}
+    </delete>
 </mapper>

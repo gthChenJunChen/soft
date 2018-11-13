@@ -33,4 +33,9 @@ public class CategoryImpl implements CategoryService {
         return categoryMapper.update(category);
     }
 
+    @Override
+    public Integer delete(Integer id) {
+        return categoryMapper.delete(id);
+    }
+
 }

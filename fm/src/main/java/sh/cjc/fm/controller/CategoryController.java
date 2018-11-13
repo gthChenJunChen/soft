@@ -5,11 +5,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import sh.cjc.fm.model.Category;
+import sh.cjc.fm.model.FunctionTest;
+import sh.cjc.fm.model.ServiceResult;
 import sh.cjc.fm.service.CategoryService;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 @RestController()
 @RequestMapping(value = "/category")
@@ -28,31 +32,43 @@ public class CategoryController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String add(@Valid @RequestBody Category category, BindingResult result) {
+    public ServiceResult add(@Valid @RequestBody Category category, BindingResult result) {
+        ServiceResult serviceResult = new ServiceResult();
         try {
             if (result.hasErrors()) {
-                return result.getFieldError().getDefaultMessage();
+                serviceResult.setSuccess(false);
+                serviceResult.setError(result.getFieldError().getDefaultMessage());
             }
-            return categoryService.add(category).toString();
+            serviceResult.setSuccess(categoryService.add(category) == 1);
         } catch (Exception e) {
-            return e.toString();
+            serviceResult.setSuccess(false);
+            serviceResult.setError(e.toString());
         }
+        return serviceResult;
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public String update(@Valid @RequestBody Category category, BindingResult result) {
+    public ServiceResult update(@Valid @RequestBody Category category, BindingResult result) {
+        ServiceResult serviceResult = new ServiceResult();
         try {
             if (result.hasErrors()) {
-                return result.getFieldError().getDefaultMessage();
+                serviceResult.setSuccess(false);
+                serviceResult.setError(result.getFieldError().getDefaultMessage());
             }
-            return categoryService.edit(category).toString();
+            serviceResult.setSuccess(categoryService.edit(category) == 1);
         } catch (Exception e) {
-            return e.toString();
+            serviceResult.setSuccess(false);
+            serviceResult.setError(e.toString());
         }
+        return serviceResult;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public Boolean delete(@PathVariable("id") Integer id) {
-        return true;
+    public ServiceResult delete(@PathVariable("id") Integer id) {
+        Supplier<Boolean> serviceResult = () -> {
+            return categoryService.delete(id) == 1;
+        };
+        return FunctionTest.aa(serviceResult);
     }
+
 }

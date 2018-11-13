@@ -1,6 +1,7 @@
 package sh.cjc.fm.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import sh.cjc.fm.model.Category;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface CategoryMapper {
     Integer insert(Category category);
 
     Integer update(Category category);
+
+    Integer delete(@Param("id") Integer id);
 }
