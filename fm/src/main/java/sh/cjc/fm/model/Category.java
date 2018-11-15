@@ -5,6 +5,9 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
+/**
+ * 分类
+ */
 public class Category {
     private Integer id;
     @NotBlank(message = "分类名称不能为空")
