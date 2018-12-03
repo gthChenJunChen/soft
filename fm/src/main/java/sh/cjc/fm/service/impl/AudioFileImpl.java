@@ -1,6 +1,5 @@
 package sh.cjc.fm.service.impl;
 
-import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sh.cjc.fm.mapper.AudioFileMapper;
@@ -16,7 +15,6 @@ public class AudioFileImpl implements AudioFileService {
 
     @Override
     public List<AudioFile> selectAll() {
-        PageHelper.startPage(1, 10);
         return audioFileMapper.selectAll();
     }
 

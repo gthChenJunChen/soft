@@ -20,7 +20,7 @@ public class AudioFileController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<AudioFile> selectAll() {
-        PageHelper.startPage(1, 10).setOrderBy("title");
+        PageHelper.startPage(1, 5).setOrderBy("title");
         return audioFileService.selectAll();
     }
 
