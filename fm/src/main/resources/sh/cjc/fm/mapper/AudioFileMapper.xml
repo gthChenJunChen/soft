@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0 //EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sh.cjc.fm.mapper.AudioFileMapper">
+    <resultMap id="audioFileMap" type="sh.cjc.fm.model.AudioFile">
+        <id property="id" column="id"/>
+        <result property="albumId" column="album_id"/>
+        <result property="title" column="title"/>
+        <result property="publishDate" column="publish_date" jdbcType="TIMESTAMP" javaType="java.sql.Date"/>
+        <result property="audioFileUrl" column="audio_file_url"/>
+        <result property="isValid" column="is_valid"/>
+        <result property="rectime" column="rectime" jdbcType="TIMESTAMP" javaType="java.sql.Timestamp"/>
+        <result property="modtime" column="modtime" jdbcType="TIMESTAMP" javaType="java.sql.Timestamp"/>
+        <result property="editor" column="editor"/>
+        <result property="creator" column="creator"/>
+    </resultMap>
+    <resultMap id="audioFileAlbum" type="sh.cjc.fm.model.AudioFile" extends="audioFileMap">
+        <association property="album" columnPrefix="album_"
+                     resultMap="sh.cjc.fm.mapper.AlbumMapper.albumMap"/>
+    </resultMap>
+    <resultMap id="audioFileAlbumTwo" type="sh.cjc.fm.model.AudioFile" extends="audioFileMap">
+        <association property="album" fetchType="lazy"
+                     select="sh.cjc.fm.mapper.AlbumMapper.selectById"
+                     column="{id=album_id}"/>
+    </resultMap>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO audiofile(album_id,title,publish_date,audio_file_url,is_valid,rectime,creator)
+        VALUES (#{albumId},#{title},#{publishDate},#{audioFileUrl},#{isValid},#{rectime},#{creator})
+    </insert>
+    <update id="update">
+        UPDATE audiofile SET album_id = #{albumId},title=#{title},publish_date=#{publishDate},audio_file_url=#{audioFileUrl},is_valid=#{isValid},
+        modtime = #{modtime},editor = #{editor}
+        WHERE id = #{id}
+    </update>
+    <delete id="delete">
+        DELETE FROM audiofile WHERE id = #{id}
+    </delete>
+    <select id="selectAll" resultMap="audioFileMap">
+        SELECT * FROM audiofile
+    </select>
+    <select id="selectById" resultMap="audioFileMap">
+        SELECT * FROM audiofile
+        WHERE id = #{id}
+    </select>
+    <select id="selectByAlbumId" resultMap="audioFileMap">
+        select * from audiofile WHERE album_id = #{albumId};
+    </select>
+    <select id="selectAlbum" resultMap="audioFileAlbum">
+        SELECT a.*,
+            b.album_name as album_album_name,
+            b.album_img as album_album_img,
+            b.anchor as album_anchor,
+            b.publish_date as album_publish_date,
+            b.introduce as album_introduce,
+            b.is_valid as album_is_valid,
+            b.rectime as album_rectime,
+            b.modtime as album_modtime,
+            b.editor as album_editor,
+            b.creator as album_creator
+        FROM audiofile a
+        LEFT JOIN album b on a.album_id = b.id
+        WHERE a.id = #{id}
+    </select>
+    <select id="selectAlbumTwo" resultMap="audioFileAlbumTwo">
+       select * from audiofile where id = #{id}
+    </select>
+</mapper>

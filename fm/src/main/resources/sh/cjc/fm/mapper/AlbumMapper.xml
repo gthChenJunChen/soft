@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0 //EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sh.cjc.fm.mapper.AlbumMapper">
+    <resultMap id="albumMap" type="sh.cjc.fm.model.Album">
+        <id property="id" column="id"/>
+        <result property="albumName" column="album_name"/>
+        <result property="albumImg" column="album_img"/>
+        <result property="anchor" column="anchor"/>
+        <result property="publishDate" column="publish_date" jdbcType="TIMESTAMP" javaType="java.sql.Date"/>
+        <result property="introduce" column="introduce"/>
+        <result property="isValid" column="is_valid"/>
+        <result property="rectime" column="rectime" jdbcType="TIMESTAMP" javaType="java.sql.Timestamp"/>
+        <result property="modtime" column="modtime" jdbcType="TIMESTAMP" javaType="java.sql.Timestamp"/>
+        <result property="editor" column="editor"/>
+        <result property="creator" column="creator"/>
+    </resultMap>
+    <resultMap id="albumMapTwo" type="sh.cjc.fm.model.Album" extends="albumMap">
+        <collection property="audioFiles" fetchType="lazy" column="{albumId=id}"
+                    select="sh.cjc.fm.mapper.AudioFileMapper.selectByAlbumId"/>
+    </resultMap>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO album(album_name,album_img,anchor,publish_date,introduce,is_valid,rectime,creator)
+        VALUES (#{albumName},#{albumImg},#{anchor},#{publishDate},#{introduce},#{isValid},#{rectime},#{creator})
+    </insert>
+    <select id="selectAll" resultMap="albumMap">
+        SELECT * FROM album
+    </select>
+    <select id="selectById" resultMap="albumMap">
+        SELECT * FROM album
+        WHERE id = #{id}
+    </select>
+    <select id="selectByIdTwo" resultMap="albumMapTwo">
+        select * from album where id = #{id}
+    </select>
+    <update id="update">
+        UPDATE album SET album_name = #{albumName},album_img = #{albumImg},anchor = #{anchor},
+        introduce = #{introduce} , is_valid = #{isValid} ,modtime = #{modtime},editor = #{editor}
+        WHERE id = #{id}
+    </update>
+    <delete id="delete">
+        DELETE FROM album WHERE id = #{id}
+    </delete>
+</mapper>

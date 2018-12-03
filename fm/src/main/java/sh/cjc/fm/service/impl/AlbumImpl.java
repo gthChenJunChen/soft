@@ -2,6 +2,8 @@ package sh.cjc.fm.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import sh.cjc.fm.mapper.AlbumMapper;
 import sh.cjc.fm.model.Album;
 import sh.cjc.fm.service.AlbumService;
@@ -23,6 +25,7 @@ public class AlbumImpl implements AlbumService {
         return albumMapper.selectAll();
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public Integer add(Album album) {
         return albumMapper.insert(album);
@@ -36,5 +39,10 @@ public class AlbumImpl implements AlbumService {
     @Override
     public Integer delete(Integer id) {
         return albumMapper.delete(id);
+    }
+
+    @Override
+    public Album findByIdTwo(Integer id) {
+        return albumMapper.selectByIdTwo(id);
     }
 }

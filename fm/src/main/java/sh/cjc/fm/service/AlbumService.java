@@ -1,6 +1,5 @@
 package sh.cjc.fm.service;
 
-import org.springframework.stereotype.Service;
 import sh.cjc.fm.model.Album;
 
 import java.util.List;
@@ -15,4 +14,6 @@ public interface AlbumService {
     Integer edit(Album album);
 
     Integer delete(Integer id);
+
+    Album findByIdTwo(Integer id);
 }

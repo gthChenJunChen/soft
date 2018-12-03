@@ -4,11 +4,21 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <settings>
-        <setting name="aggressiveLazyLoading" value="false"/>
+        <!--设置懒加载-->
+        <!--<setting name="aggressiveLazyLoading" value="false"/>-->
+
+        <setting name="logImpl" value="LOG4J"/>
     </settings>
     <typeAliases>
         <package name="sh.cjc.fm.model"/>
     </typeAliases>
+    <plugins>
+        <!-- com.github.pagehelper为PageHelper类所在包名 -->
+        <plugin interceptor="com.github.pagehelper.PageHelper">
+            <!-- 设置数据库类型 Oracle,Mysql,MariaDB,SQLite,Hsqldb,PostgreSQL六种数据库-->
+            <property name="param1" value="value1"/>
+        </plugin>
+    </plugins>
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC">
@@ -30,4 +40,6 @@
         <!--配置文件夹-->
         <package name="sh.cjc.fm.mapper"/>
     </mappers>
+
+
 </configuration>

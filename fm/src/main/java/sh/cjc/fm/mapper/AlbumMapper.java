@@ -17,4 +17,6 @@ public interface AlbumMapper {
     Integer update(Album album);
 
     Integer delete(@Param("id") Integer id);
+
+    Album selectByIdTwo(Integer id);
 }

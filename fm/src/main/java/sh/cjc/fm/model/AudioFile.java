@@ -1,34 +1,32 @@
 package sh.cjc.fm.model;
 
-import java.util.Date;
-import java.util.List;
 
-/**
- * 专辑
- */
-public class Album {
+import java.util.Date;
+
+public class AudioFile {
     private Integer id;
-    private String albumName;
-    private String albumImg;
-    private String anchor;
+    private Integer albumId;
+    private String title;
     private Date publishDate;
-    private String introduce;
+    private String audioFileUrl;
     private Boolean isValid;
     private Date rectime;
     private Date modtime;
     private String editor;
     private String creator;
 
-    public List<AudioFile> getAudioFiles() {
-        return audioFiles;
+    /**
+     * 所属专辑
+     */
+    private Album album;
+
+    public Album getAlbum() {
+        return album;
     }
 
-    public void setAudioFiles(List<AudioFile> audioFiles) {
-        this.audioFiles = audioFiles;
+    public void setAlbum(Album album) {
+        this.album = album;
     }
-
-    private List<AudioFile> audioFiles;
-
 
     public Integer getId() {
         return id;
@@ -38,28 +36,20 @@ public class Album {
         this.id = id;
     }
 
-    public String getAlbumName() {
-        return albumName;
+    public Integer getAlbumId() {
+        return albumId;
     }
 
-    public void setAlbumName(String albumName) {
-        this.albumName = albumName;
+    public void setAlbumId(Integer albumId) {
+        this.albumId = albumId;
     }
 
-    public String getAlbumImg() {
-        return albumImg;
+    public String getTitle() {
+        return title;
     }
 
-    public void setAlbumImg(String albumImg) {
-        this.albumImg = albumImg;
-    }
-
-    public String getAnchor() {
-        return anchor;
-    }
-
-    public void setAnchor(String anchor) {
-        this.anchor = anchor;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Date getPublishDate() {
@@ -70,12 +60,12 @@ public class Album {
         this.publishDate = publishDate;
     }
 
-    public String getIntroduce() {
-        return introduce;
+    public String getAudioFileUrl() {
+        return audioFileUrl;
     }
 
-    public void setIntroduce(String introduce) {
-        this.introduce = introduce;
+    public void setAudioFileUrl(String audioFileUrl) {
+        this.audioFileUrl = audioFileUrl;
     }
 
     public Boolean getValid() {
