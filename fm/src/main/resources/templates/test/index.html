@@ -1,0 +1,22 @@
+<div>
+    test index
+</div>
+<table id="demoAAA" lay-filter="test"></table>
+<script>
+    //Demo
+    layui.use('form', function () {
+        var table = layui.table;
+        var tableTitle = [
+            {type: 'checkbox', fixed: 'left'}
+            , {field: 'id', title: 'ID', width: 120, sort: true}
+            , {field: 'albumName', title: "专题名称", width: 120}
+        ];
+        table.render({
+            elem: '#demoAAA'
+            , height: 400
+            , url: '/album' //数据接口
+            , page: true //开启分页
+            , cols: [tableTitle]
+        });
+    });
+</script>
