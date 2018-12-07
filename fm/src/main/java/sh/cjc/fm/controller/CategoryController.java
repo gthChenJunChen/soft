@@ -10,7 +10,6 @@ import sh.cjc.fm.service.CategoryService;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.function.Supplier;
 
 @RestController()
 @RequestMapping(value = "/category")
