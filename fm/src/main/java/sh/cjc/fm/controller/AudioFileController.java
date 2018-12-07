@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import sh.cjc.fm.model.AudioFile;
 import sh.cjc.fm.model.ResultSupplier;
 import sh.cjc.fm.model.ServiceResult;
@@ -17,6 +18,11 @@ import java.util.List;
 public class AudioFileController {
     @Autowired
     AudioFileService audioFileService;
+
+    @RequestMapping(value = "/index")
+    public ModelAndView index() {
+        return new ModelAndView("audiofile/index");
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public List<AudioFile> selectAll() {

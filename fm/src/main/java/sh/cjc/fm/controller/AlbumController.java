@@ -1,9 +1,13 @@
 package sh.cjc.fm.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import sh.cjc.fm.model.Album;
+import sh.cjc.fm.model.LayuiTable;
 import sh.cjc.fm.model.ResultSupplier;
 import sh.cjc.fm.model.ServiceResult;
 import sh.cjc.fm.service.AlbumService;
@@ -12,11 +16,16 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/album")
+@RequestMapping("album")
 public class AlbumController {
 
     @Autowired
     AlbumService albumService;
+
+    @RequestMapping(value = "index")
+    public ModelAndView index() {
+        return new ModelAndView("album/index");
+    }
 
     @RequestMapping(method = RequestMethod.POST)
     public ServiceResult add(@Valid @RequestBody Album album, BindingResult result) {
@@ -26,8 +35,14 @@ public class AlbumController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Album> findAll() {
-        return albumService.findAll();
+    public LayuiTable<List<Album>> findAll() {
+        LayuiTable<List<Album>> albumLayuiTable = new LayuiTable<List<Album>>();
+        PageHelper.startPage(1, 10);
+        PageInfo<Album> pageInfo = new PageInfo<>(albumService.findAll());
+        albumLayuiTable.setData(pageInfo.getList());
+        albumLayuiTable.setCount(pageInfo.getTotal());
+        albumLayuiTable.setCode(0L);
+        return albumLayuiTable;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

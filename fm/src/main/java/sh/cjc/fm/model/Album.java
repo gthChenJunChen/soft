@@ -1,5 +1,8 @@
 package sh.cjc.fm.model;
 
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +17,7 @@ public class Album {
     private Date publishDate;
     private String introduce;
     private Boolean isValid;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date rectime;
     private Date modtime;
     private String editor;
