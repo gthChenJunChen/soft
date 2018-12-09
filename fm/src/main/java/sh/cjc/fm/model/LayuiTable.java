@@ -3,17 +3,17 @@ package sh.cjc.fm.model;
 
 import java.util.List;
 
-public class LayuiTable<T extends List> {
+public class LayuiTable<T> {
     private Long code;
     private Long count;
     private String msg;
-    private T data;
+    private List<T> data;
 
     public LayuiTable() {
         super();
     }
 
-    public LayuiTable(Long code, Long count, String msg, T data) {
+    public LayuiTable(Long code, Long count, String msg, List<T> data) {
         super();
         this.code = code;
         this.count = count;
@@ -55,11 +55,11 @@ public class LayuiTable<T extends List> {
         this.msg = msg;
     }
 
-    public T getData() {
+    public List<T> getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public void setData(List<T> data) {
         this.data = data;
     }
 }

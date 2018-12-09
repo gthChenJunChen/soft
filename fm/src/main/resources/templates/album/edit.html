@@ -1,0 +1,48 @@
+<div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list">
+    <script type="text/html" template>
+        <input type="hidden" name="id" value="{{ d.params.id || '' }}">
+    </script>
+    <div class="layui-form-item">
+        <label class="layui-form-label">专题名称：</label>
+        <div class="layui-input-inline">
+            <script type="text/html" template="">
+                <input type="text" name="albumName" value="{{ d.params.albumName || '' }}" lay-verify="required"
+                       placeholder="请输入专题名称" autocomplete="off" class="layui-input">
+            </script>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">专题人员：</label>
+        <div class="layui-input-inline">
+            <script type="text/html" template="">
+                <input type="text" name="auchor" value="{{ d.params.auchor || '' }}" lay-verify="required"
+                       placeholder="请输专题人员" autocomplete="off" class="layui-input">
+            </script>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">专题介绍：</label>
+        <div class="layui-input-inline">
+            <script type="text/html" template="">
+                <textarea name="introduce" lay-verify="required" style="width: 400px; height: 150px;" autocomplete="off"
+                          class="layui-textarea">
+            {{ d.params.introduce || '' }}
+          </textarea>
+            </script>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">发布状态：</label>
+        <div class="layui-input-inline">
+            <input type="checkbox" lay-verify="required" lay-filter="valid" name="valid" lay-skin="switch"
+                   lay-text="已发布|待修改">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"></label>
+        <div class="layui-input-inline">
+            <input type="button" lay-submit="" lay-filter="layuiadmin-app-form-submit" value="确认" class="layui-btn">
+        </div>
+    </div>
+</div>
+<script src="../../viewJS/album/album_edit.js"></script>
